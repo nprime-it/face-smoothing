@@ -66,8 +66,9 @@ def load_configs():
     configs : dict
         A dictionary containing the configs
     """
-    with open('/content/drive/My Drive/Colab Notebooks/face-smoothing'\
-               '/configs/configs.yaml', 'r') as file:
+    #with open('/content/drive/My Drive/Colab Notebooks/face-smoothing'\
+    #           '/configs/configs.yaml', 'r') as file:
+    with open('configs/configs.yaml', 'r') as file:
         return yaml.load(file, Loader=yaml.FullLoader)
 
 
@@ -114,6 +115,7 @@ def main(args):
                     process_video(file, args, cfg, net)
                 # If file is a compatible image file    
                 if is_image(file):
+                    print(file)
                     # Load image
                     input_img = load_image(file)
                     # Process image
@@ -143,5 +145,9 @@ def main(args):
 
 
 if __name__ == '__main__':
+    # DJDJ
+    print(os.environ['PATH'])
+    #print(os.environ['PYTHONPATH'])
+    
     args = parse_args()
     main(args)

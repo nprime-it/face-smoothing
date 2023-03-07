@@ -12,8 +12,8 @@ def get_roi(detected_img, bboxes, box_num):
         BGR image
     bboxes : 
     """
-    return detected_img[bboxes[box_num][1]:bboxes[box_num][3], 
-                        bboxes[box_num][0]:bboxes[box_num][2]]
+    return detected_img[max(0, bboxes[box_num][1]):bboxes[box_num][3], 
+                        max(0, bboxes[box_num][0]):bboxes[box_num][2]]
 
 
 def smooth_face(cfg, detected_img, bboxes):
@@ -42,7 +42,7 @@ def smooth_face(cfg, detected_img, bboxes):
     """
     # Get Region Of Interest of each face
     for box_num in range(len(bboxes)):
-        print(f'Face detected: {bboxes[box_num]}')
+        #print(f'Face detected: {bboxes[box_num]}')
         # Get Region of Interest
         roi_img = get_roi(detected_img, bboxes, box_num)
         # Copy ROI
@@ -71,6 +71,6 @@ def smooth_face(cfg, detected_img, bboxes):
         # Init smoothed image
         output_img = detected_img.copy()
         # Replace ROI on full image with blurred ROI
-        output_img[bboxes[box_num][1]:bboxes[box_num][3], 
-                   bboxes[box_num][0]:bboxes[box_num][2]] = smoothed_roi
+        output_img[max(0, bboxes[box_num][1]):bboxes[box_num][3], 
+                   max(0, bboxes[box_num][0]):bboxes[box_num][2]] = smoothed_roi
     return output_img, roi_img, full_mask, smoothed_roi
