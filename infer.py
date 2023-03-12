@@ -2,7 +2,7 @@ import os
 import argparse
 import yaml
 import time
-
+import traceback
 import cv2
 import matplotlib
 import matplotlib.pyplot as plt
@@ -109,12 +109,7 @@ def main(args):
             for file in os.listdir(input_file):
                 # Join input dir and file name
                 file = os.path.join(input_file, file)
-                # If file is a compatible video file
-                if is_video(file):
-                    # Process video
-                    process_video(file, args, cfg, net)
-                # If file is a compatible image file    
-                if is_image(file):
+                try:
                     print(file)
                     # Load image
                     input_img = load_image(file)
@@ -126,6 +121,8 @@ def main(args):
                     output_img = check_if_adding_bboxes(args, img_steps)
                     # Save image
                     img_saved = save_image(out_filename, output_img)
+                except:
+                    traceback.print_exc()
 
     except ValueError:
         print('Input must be a valid image, video, or directory.')
