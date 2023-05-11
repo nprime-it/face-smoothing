@@ -121,8 +121,9 @@ def main(args):
                     output_img = check_if_adding_bboxes(args, img_steps)
                     # Save image
                     img_saved = save_image(out_filename, output_img)
-                except:
-                    traceback.print_exc()
+                except Exception as e:
+                    #traceback.print_exc()
+                    print('skip processing face-smoothing: %s' % file)
 
     except ValueError:
         print('Input must be a valid image, video, or directory.')
