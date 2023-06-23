@@ -6,6 +6,7 @@ import traceback
 import cv2
 import matplotlib
 import matplotlib.pyplot as plt
+from shutil import copyfile
 
 from detector.detect import detect_face
 from detector.smooth import smooth_face
@@ -109,6 +110,7 @@ def main(args):
             for file in sorted(os.listdir(input_file)):
                 # Join input dir and file name
                 file = os.path.join(input_file, file)
+                out_filename = '%s/%s' % (args.output, os.path.basename(file))
                 try:
                     print('[face_smoothing] %s' % file)
                     # Load image
@@ -120,11 +122,11 @@ def main(args):
                     output_img = check_if_adding_bboxes(args, img_steps)
                     # Save image
                     #img_saved = save_image(out_filename, output_img)
-                    out_filename = '%s/%s' % (args.output, os.path.basename(file))
                     cv2.imwrite(out_filename, output_img)
                     
                 except Exception as e:
                     #traceback.print_exc()
+                    copyfile(file, out_filename)
                     print('skip processing face-smoothing: %s' % file)
 
     except ValueError:
